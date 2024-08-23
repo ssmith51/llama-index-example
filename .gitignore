@@ -1,0 +1,4 @@
+.venv
+chroma_db/
+api-key.txt
+ca-payphone.code-workspace
