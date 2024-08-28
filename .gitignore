@@ -1,4 +1,5 @@
 .venv
 chroma_db/
 api-key.txt
+openapi.key
 ca-payphone.code-workspace
