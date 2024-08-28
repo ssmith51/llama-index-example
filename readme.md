@@ -10,3 +10,14 @@ This is an example only, it is not for use in production, or a pay phone.
 
 ## Exting the program
 You can exit the program by typing `exit` or `quit`
+
+## Data Stores
+Data store access is experimentional. Currently testing: 
+- CSV Stores
+- Simple Documents (i.e., text files) 
+
+## TODO 
+- Add conversation history 
+- Determine best way to host a web front end
+- Add additionally data store types with proper embedding
+- Load index (vector store) w/o reloading on each startup
