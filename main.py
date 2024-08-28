@@ -1,6 +1,7 @@
 import chromadb
 from llama_index.llms.openai import OpenAI
 from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader, StorageContext
+from llama_index.readers.file import CSVReader
 from llama_index.vector_stores.chroma import ChromaVectorStore
 import os, time, openai, inquirer
 
@@ -15,7 +16,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 tic = time.perf_counter()
 # load some documents
-documents = SimpleDirectoryReader("./data").load_data()
+text_documents = SimpleDirectoryReader("./data/text").load_data()
+
 toc = time.perf_counter()
 
 print(f"Loaded documents in {toc - tic:0.4f} seconds")
@@ -37,8 +39,18 @@ print(f"Chroma DB loaded in {toc - tic:0.4f} seconds")
 tic = time.perf_counter()
 # create your index
 index = VectorStoreIndex.from_documents(
-    documents, storage_context=storage_context
+    text_documents, storage_context=storage_context
 )
+
+#Add in CSV Document
+parser = CSVReader()
+file_extractor = {".csv": parser}  # Add other CSV formats as needed
+csv_documents = SimpleDirectoryReader(
+    "./data/csv", file_extractor=file_extractor
+).load_data()
+
+index.insert_nodes(csv_documents)
+
 toc = time.perf_counter()
 
 print(f"Index created in {toc - tic:0.4f} seconds")
